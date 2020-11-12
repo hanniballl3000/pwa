@@ -1,8 +1,12 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, Suspense } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+
+const TestC = React.lazy(() => import("./TestC"));
 
 function App() {
+  const [isHidden, setIsHidden] = useState(true);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +22,12 @@ function App() {
         >
           Learn React
         </a>
+        <button onClick={() => setIsHidden(false)}>click me</button>
+        {isHidden ? null : (
+          <Suspense fallback={<div>loading...</div>}>
+            <TestC />
+          </Suspense>
+        )}
       </header>
     </div>
   );
